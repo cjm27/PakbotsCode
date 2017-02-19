@@ -28,12 +28,12 @@ public class TeleOPMode extends ComponentsInit {
 
     public void loop() {
         hDrive.setValues(super.driveX(), super.driveLY(), super.driveR());
-        if(leftTrigger()&& !toggle)
+        if(gamepad1.left_bumper&& !toggle)
             toggle =true;
-        else if(leftTrigger()&& toggle)
+        else if(gamepad1.left_bumper&& toggle)
             toggle=false;
 
-        intake.setIntakeValues( gamepad1.left_bumper,toggle);
+        intake.setIntakeValues( leftTrigger(),toggle);
         intake.setFeedValues(gamepad1.right_bumper,rightTrigger());
         flyWheel.setValues(gamepad1.y,gamepad1.a);
         //telemetry.addData("position ", hDrive.encoderValues(M_FRONT_LEFT));

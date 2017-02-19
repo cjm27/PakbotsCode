@@ -19,12 +19,12 @@ import static java.lang.Math.*;
 public abstract class ComponentsInit extends OpMode {
     DcMotor mFL, mFR, mRL, mRR, mBL, mUW, mLW;
     Servo sTL, sTR;
-    CRServo sTI, sLI, sRI;
+    CRServo sTI, sLI, sRI, sFT,sFB;
     AnalogInput tbUP;
     ColorSensor sColor;
     Accelerometer sAccel = new Accelerometer();
     private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUW, mLW};
-    private CRServo[] crservos = {sTI, sLI, sRI};
+    private CRServo[] crservos = {sTI, sLI, sRI,sFT,sFB};
     private Servo[] servos = {sTL, sTR};
 
     public static final class ComponentMap {
