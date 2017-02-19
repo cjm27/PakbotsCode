@@ -9,6 +9,8 @@ import static org.firstinspires.ftc.teamcode.ComponentsInit.ComponentMap.M_FRONT
 
 @TeleOp(name = "TeleOPMode")
 public class TeleOPMode extends ComponentsInit {
+    boolean intakeStatus = false;
+
     public void init() {
         super.sensorInit();
         super.MotorInit();
@@ -28,7 +30,6 @@ public class TeleOPMode extends ComponentsInit {
         //telemetry.addData("position ", hDrive.encoderValues(M_FRONT_LEFT));
         //sAccel.calcAccel();
         //telemetry.addData("position:", sAccel.positions.x+""+sAccel.positions.y+""+sAccel.positions.z+"");
-
     }
 
     Intake intake;

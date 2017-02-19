@@ -12,10 +12,6 @@ public class ServoControl {
         this.servos=servos;
     }
 
-    public void setValues(){
-
-    }
-
     public void open(){
         servos[S_TOP_LEFT].setPosition(0.8);
         servos[S_TOP_RIGHT].setPosition(0.8);
