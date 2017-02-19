@@ -21,37 +21,37 @@ public class ServoControl {
     }
 
     public void intakeForward(){
-        servos[INTAKE_1].setPosition(1);
-        servos[INTAKE_2].setPosition(0);
-        servos[INTAKE_3].setPosition(1);
+        servos[S_INTAKE_FRONT].setPosition(1);
+        servos[S_INTAKE_MID].setPosition(0);
+        servos[S_INTAKE_REAR].setPosition(1);
     }
 
     public void intakeReverse(){
-        servos[INTAKE_1].setPosition(0);
-        servos[INTAKE_2].setPosition(1);
-        servos[INTAKE_3].setPosition(0);
+        servos[S_INTAKE_FRONT].setPosition(0);
+        servos[S_INTAKE_MID].setPosition(1);
+        servos[S_INTAKE_REAR].setPosition(0);
     }
 
     public void intakeStop(){
 
-        servos[INTAKE_1].setPosition(0.5);
-        servos[INTAKE_2].setPosition(0.5);
-        servos[INTAKE_3].setPosition(0.5);
+        servos[S_INTAKE_FRONT].setPosition(0.5);
+        servos[S_INTAKE_MID].setPosition(0.5);
+        servos[S_INTAKE_REAR].setPosition(0.5);
     }
 
     public void feedForward(){
-        servos[FEED_1].setPosition(1);
-        servos[FEED_2].setPosition(1);
+        servos[S_FEED_TOP].setPosition(1);
+        servos[S_FEED_BOTTOM].setPosition(1);
     }
 
     public void feedReverse(){
-        servos[FEED_1].setPosition(1);
-        servos[FEED_2].setPosition(1);
+        servos[S_FEED_TOP].setPosition(0);
+        servos[S_FEED_BOTTOM].setPosition(0);
     }
 
     public void feedStop(){
-        servos[FEED_1].setPosition(1);
-        servos[FEED_2].setPosition(1);
+        servos[S_FEED_TOP].setPosition(0.5);
+        servos[S_FEED_BOTTOM].setPosition(0.5);
     }
 
 

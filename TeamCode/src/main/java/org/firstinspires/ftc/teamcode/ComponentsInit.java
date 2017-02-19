@@ -36,9 +36,16 @@ public abstract class   ComponentsInit extends OpMode {
             final static int S_TOP_LEFT=0;
             final static int S_TOP_RIGHT=1;
 
-            final static int S_TOP_INTAKE=0;
-            final static int S_LEFT_INTAKE=1;
-            final static int S_RIGHT_INTAKE=2;
+            //final static int S_TOP_INTAKE=0;
+            //final static int S_LEFT_INTAKE=1;
+            //final static int S_RIGHT_INTAKE=2;
+
+            final static int S_INTAKE_FRONT=0;
+            final static int S_INTAKE_MID=1;
+            final static int S_INTAKE_REAR=2;
+
+            final static int S_FEED_TOP=3;
+            final static int S_FEED_BOTTOM=4;
         }
         float driveX(){
             return gamepad1.left_stick_x;
@@ -64,9 +71,15 @@ public abstract class   ComponentsInit extends OpMode {
             sAccel.imu=hardwareMap.get(BNO055IMU.class, "accel");
         }
         void crsrvoInit(){
-            crservos[S_TOP_INTAKE]=hardwareMap.crservo.get("ti");
-            crservos[S_RIGHT_INTAKE]=hardwareMap.crservo.get("ri");
-            crservos[S_LEFT_INTAKE]=hardwareMap.crservo.get("li");
+            //crservos[S_TOP_INTAKE]=hardwareMap.crservo.get("ti");
+            //crservos[S_RIGHT_INTAKE]=hardwareMap.crservo.get("ri");
+            //crservos[S_LEFT_INTAKE]=hardwareMap.crservo.get("li");
+            crservos[S_INTAKE_FRONT]=hardwareMap.crservo.get("fi");
+            crservos[S_INTAKE_MID]=hardwareMap.crservo.get("mi");
+            crservos[S_INTAKE_REAR]=hardwareMap.crservo.get("ri");
+
+            crservos[S_FEED_TOP]=hardwareMap.crservo.get("tf");
+            crservos[S_FEED_BOTTOM]=hardwareMap.crservo.get("bf");
         }
         void MotorInit() {
             motors[M_FRONT_LEFT] = hardwareMap.dcMotor.get("fl");
