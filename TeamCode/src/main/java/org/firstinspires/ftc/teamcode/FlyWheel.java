@@ -9,17 +9,14 @@ public class FlyWheel {
         this.motors=motors;
     }
 
-    public void forward(boolean forward){
+    public void setValues(boolean forward,boolean backward){
         if(forward)
-            motors[M_UPPER_LIFT].setPower(0.8);
+            motors[M_UPPER_WHEEL].setPower(0.8);
+        else if(backward)
+            motors[M_UPPER_WHEEL].setPower(-0.8);
         else
-            motors[M_UPPER_LIFT].setPower(0);
-    }
-    public void backward(boolean backward){
-        if(backward)
-            motors[M_UPPER_LIFT].setPower(-0.8);
-        else
-            motors[M_UPPER_LIFT].setPower(0);
+            motors[M_UPPER_WHEEL].setPower(0);
+
     }
     DcMotor motors[];
 }

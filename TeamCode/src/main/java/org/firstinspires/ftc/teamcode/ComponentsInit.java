@@ -17,13 +17,13 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import static java.lang.Math.*;
 
 public abstract class ComponentsInit extends OpMode {
-    DcMotor mFL, mFR, mRL, mRR, mBL, mUL, mLL;
+    DcMotor mFL, mFR, mRL, mRR, mBL, mUW, mLW;
     Servo sTL, sTR;
     CRServo sTI, sLI, sRI;
     AnalogInput tbUP;
     ColorSensor sColor;
     Accelerometer sAccel = new Accelerometer();
-    private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUL, mLL};
+    private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUW, mLW};
     private CRServo[] crservos = {sTI, sLI, sRI};
     private Servo[] servos = {sTL, sTR};
 
@@ -33,20 +33,15 @@ public abstract class ComponentsInit extends OpMode {
         final static int M_REAR_LEFT = 2;
         final static int M_REAR_RIGHT = 3;
         final static int M_BOTTOM_LIFT = 4;
-        final static int M_UPPER_LIFT = 5;
-        final static int M_LOWER_LIFT = 6;
-
+        final static int M_UPPER_WHEEL = 5;
+        final static int M_LOWER_WHEEL = 6;
+        //servo
         final static int S_TOP_LEFT = 0;
         final static int S_TOP_RIGHT = 1;
-
-        //final static int S_TOP_INTAKE=0;
-        //final static int S_LEFT_INTAKE=1;
-        //final static int S_RIGHT_INTAKE=2;
-
+        //crservo
         final static int S_INTAKE_FRONT = 0;
         final static int S_INTAKE_MID = 1;
         final static int S_INTAKE_REAR = 2;
-
         final static int S_FEED_TOP = 3;
         final static int S_FEED_BOTTOM = 4;
     }
@@ -75,14 +70,6 @@ public abstract class ComponentsInit extends OpMode {
         return -y;
     }
 
-    boolean leftBumper(){
-        return gamepad1.left_bumper;
-    }
-
-    boolean rightBumper(){
-        return gamepad1.right_bumper;
-    }
-
     boolean leftTrigger(){
         return gamepad1.left_trigger >= 0.8;
     }
@@ -97,7 +84,7 @@ public abstract class ComponentsInit extends OpMode {
         sAccel.imu = hardwareMap.get(BNO055IMU.class, "accel");
     }
 
-    void crsrvoInit() {
+    void crservoInit() {
         //crservos[S_TOP_INTAKE]=hardwareMap.crservo.get("ti");
         //crservos[S_RIGHT_INTAKE]=hardwareMap.crservo.get("ri");
         //crservos[S_LEFT_INTAKE]=hardwareMap.crservo.get("li");
@@ -107,6 +94,7 @@ public abstract class ComponentsInit extends OpMode {
 
         crservos[S_FEED_TOP] = hardwareMap.crservo.get("tf");
         crservos[S_FEED_BOTTOM] = hardwareMap.crservo.get("bf");
+
     }
 
     void MotorInit() {
@@ -114,8 +102,8 @@ public abstract class ComponentsInit extends OpMode {
         motors[M_FRONT_RIGHT] = hardwareMap.dcMotor.get("fr");
         motors[M_REAR_LEFT] = hardwareMap.dcMotor.get("rl");
         motors[M_REAR_RIGHT] = hardwareMap.dcMotor.get("rr");
-        //motors[M_UPPER_LIFT] = hardwareMap.dcMotor.get("ul");
-        //motors[M_LOWER_LIFT] = hardwareMap.dcMotor.get("ll");
+        motors[M_UPPER_WHEEL] = hardwareMap.dcMotor.get("uw");
+        motors[M_LOWER_WHEEL] = hardwareMap.dcMotor.get("lw");
 
         //motors[M_FRONT_RIGHT].setDirection(DcMotorSimple.Direction.REVERSE);
         //motors[M_REAR_RIGHT].setDirection(DcMotorSimple.Direction.REVERSE);
@@ -124,9 +112,6 @@ public abstract class ComponentsInit extends OpMode {
         //motors[M_UPPER_LIFT].setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
-    void liftMortorInit() {
-        motors[M_BOTTOM_LIFT] = hardwareMap.dcMotor.get("bl");
-    }
 
     void servoInit() {
         servos[S_TOP_LEFT] = hardwareMap.servo.get("sl");

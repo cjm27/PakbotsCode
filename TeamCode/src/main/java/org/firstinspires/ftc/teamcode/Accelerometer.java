@@ -18,15 +18,17 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import java.util.Locale;
 
 
-public class Accelerometer {
+public class Accelerometer implements Runnable{
     BNO055IMU imu;
 
     Orientation angles;
     Position positions;
     Acceleration accel;
 
+    public void run(){
+        calcAccel();
+    }
     public void calcAccel() {
-
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -36,6 +38,7 @@ public class Accelerometer {
         imu.initialize(parameters);
         angles   = imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
         positions=imu.getPosition();
+        accel=imu.getLinearAcceleration();
 
     }
     Position getPosition(){

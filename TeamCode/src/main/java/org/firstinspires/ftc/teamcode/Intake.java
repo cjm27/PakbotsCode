@@ -23,13 +23,22 @@ public class Intake {
             crservos[S_TOP_INTAKE].setPower(0.5);
     }*/
 
-    public void setValues(boolean intakeStatus, boolean leftTrigger, boolean leftBumper, boolean rightTrigger, boolean rightBumper){
-        if (leftBumper && !intakeStatus)
+    public void setIntakeValues(boolean forward, boolean backward){
+        if (forward)
             intakeForward();
-        else if (leftTrigger)
+        else if (backward)
             intakeReverse();
-        else if(intakeStatus)
+        else
             intakeStop();
+    }
+    public void setFeedValues(boolean forward, boolean backward){
+        if(forward)
+            feedForward();
+        else if(backward)
+            feedReverse();
+        else
+            feedStop();
+
     }
 
 
