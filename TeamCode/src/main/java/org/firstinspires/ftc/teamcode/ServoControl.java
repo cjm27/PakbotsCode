@@ -12,13 +12,12 @@ public class ServoControl {
     }
 
     public void open(){
-        servos[S_TOP_LEFT].setPosition(0.8);
-        servos[S_TOP_RIGHT].setPosition(0.8);
+        servos[S_TOP_LEFT].setPosition(0.35);
+        servos[S_TOP_RIGHT].setPosition(0.45);
     }
-
     public void close(){
-        servos[S_TOP_LEFT].setPosition(0.2);
-        servos[S_TOP_RIGHT].setPosition(0.2);
+        servos[S_TOP_RIGHT].setPosition(1.0);
+        servos[S_TOP_LEFT].setPosition(0.0);
     }
 
 

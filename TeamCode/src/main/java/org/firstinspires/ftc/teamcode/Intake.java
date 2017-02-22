@@ -10,19 +10,6 @@ public class Intake {
         this.crservos=crservos;
     }
 
-    /*public void forward(boolean forward){
-        if(forward)
-            crservos[S_TOP_INTAKE].setPower(0.8);
-        else
-            crservos[S_TOP_INTAKE].setPower(0.5);
-    }
-    public void backward(boolean backward){
-        if(backward)
-            crservos[S_TOP_INTAKE].setPower(0.2);
-        else
-            crservos[S_TOP_INTAKE].setPower(0.5);
-    }*/
-
     public void setIntakeValues(boolean forward, boolean backward){
         if (forward)
             intakeForward();
@@ -41,7 +28,6 @@ public class Intake {
 
     }
 
-
     public void intakeForward(){
         crservos[S_INTAKE_FRONT].setPower(1);
         crservos[S_INTAKE_MID].setPower(-1.0);
@@ -57,7 +43,7 @@ public class Intake {
     public void intakeStop(){
 
         crservos[S_INTAKE_FRONT].setPower(0);
-        crservos[S_INTAKE_MID].setPower(0.1);
+        crservos[S_INTAKE_MID].setPower(0);
         crservos[S_INTAKE_REAR].setPower(0);
     }
 

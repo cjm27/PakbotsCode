@@ -10,13 +10,13 @@ public class FlyWheel {
     }
 
     public void setValues(boolean forward,boolean backward){
-        if(forward) {
-            motors[M_UPPER_WHEEL].setPower(1.0);
-            motors[M_LOWER_WHEEL].setPower(-1.0);
-        }
-        else if(backward){
+        if(backward) {
             motors[M_UPPER_WHEEL].setPower(-1.0);
             motors[M_LOWER_WHEEL].setPower(1.0);
+        }
+        else if(forward){
+            motors[M_UPPER_WHEEL].setPower(1.0);
+            motors[M_LOWER_WHEEL].setPower(-1.0);
         }
         else{
             motors[M_UPPER_WHEEL].setPower(0);

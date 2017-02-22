@@ -17,13 +17,13 @@ import com.qualcomm.robotcore.hardware.AnalogInput;
 import static java.lang.Math.*;
 
 public abstract class ComponentsInit extends OpMode {
-    DcMotor mFL, mFR, mRL, mRR, mBL, mUW, mLW;
-    Servo sTL, sTR;
-    CRServo sTI, sLI, sRI, sFT,sFB;
-    AnalogInput tbUP;
-    ColorSensor sColor;
-    Accelerometer sAccel = new Accelerometer();
-    private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUW, mLW};
+    private DcMotor mFL, mFR, mRL, mRR, mBL, mUW, mLW, mUL;
+    private Servo sTL, sTR;
+    private CRServo sTI, sLI, sRI, sFT,sFB;
+    private AnalogInput tbUP;
+    private ColorSensor sColor;
+    private Accelerometer sAccel;
+    private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUW, mLW, mUL};
     private CRServo[] crservos = {sTI, sLI, sRI,sFT,sFB};
     private Servo[] servos = {sTL, sTR};
 
@@ -35,6 +35,7 @@ public abstract class ComponentsInit extends OpMode {
         final static int M_BOTTOM_LIFT = 4;
         final static int M_UPPER_WHEEL = 5;
         final static int M_LOWER_WHEEL = 6;
+        final static int M_UPPER_LIFT = 7; //newly added
         //servo
         final static int S_TOP_LEFT = 0;
         final static int S_TOP_RIGHT = 1;
@@ -79,8 +80,10 @@ public abstract class ComponentsInit extends OpMode {
     }
 
     void sensorInit() {
+
         //tbUP=hardwareMap.analogInput.get("tbUP");
         //sColor=hardwareMap.colorSensor.get("color");
+        sAccel = new Accelerometer();
         sAccel.imu = hardwareMap.get(BNO055IMU.class, "accel");
     }
 
@@ -104,19 +107,23 @@ public abstract class ComponentsInit extends OpMode {
         motors[M_REAR_RIGHT] = hardwareMap.dcMotor.get("rr");
         motors[M_UPPER_WHEEL] = hardwareMap.dcMotor.get("uw");
         motors[M_LOWER_WHEEL] = hardwareMap.dcMotor.get("lw");
+        motors[M_UPPER_LIFT] = hardwareMap.dcMotor.get("ul");//new
+        motors[M_BOTTOM_LIFT] = hardwareMap.dcMotor.get("ll");//new
 
         //motors[M_FRONT_RIGHT].setDirection(DcMotorSimple.Direction.REVERSE);
         //motors[M_REAR_RIGHT].setDirection(DcMotorSimple.Direction.REVERSE);
         motors[M_FRONT_LEFT].setDirection(DcMotorSimple.Direction.REVERSE);
         motors[M_REAR_LEFT].setDirection(DcMotorSimple.Direction.REVERSE);
-        //motors[M_UPPER_LIFT].setDirection(DcMotorSimple.Direction.REVERSE);
+        motors[M_UPPER_LIFT].setDirection(DcMotorSimple.Direction.REVERSE);//new
+        motors[M_BOTTOM_LIFT].setDirection(DcMotorSimple.Direction.REVERSE);//new
     }
 
 
     void servoInit() {
         servos[S_TOP_LEFT] = hardwareMap.servo.get("sl");
         servos[S_TOP_RIGHT] = hardwareMap.servo.get("sr");
-
+        servos[S_TOP_RIGHT].setPosition(0.0);
+        //servos[S_TOP_LEFT].setPosition(0.7);
     }
 
     CRServo[] getCRServos() {
@@ -130,5 +137,7 @@ public abstract class ComponentsInit extends OpMode {
     DcMotor[] getMotors() {
         return motors;
     }
-
+    Accelerometer getAccel(){
+        return sAccel;
+    }
 }
