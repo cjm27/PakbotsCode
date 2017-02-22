@@ -10,6 +10,7 @@ import static org.firstinspires.ftc.teamcode.ComponentsInit.ComponentMap.M_FRONT
 @TeleOp(name = "TeleOPMode")
 public class TeleOPMode extends ComponentsInit {
     boolean intakeStatus = false;
+    double winchServoPos = 0.0;
 
     public void init() {
         //super.sensorInit();
@@ -25,6 +26,7 @@ public class TeleOPMode extends ComponentsInit {
         //`new Thread(getAccel()).start();
         //getAccel().composeTelemetry(telemetry);
         time=System.currentTimeMillis();
+        servoControl.release();
     }
 
     public void loop() {
@@ -37,10 +39,18 @@ public class TeleOPMode extends ComponentsInit {
         intake.setFeedValues(gamepad1.right_bumper,rightTrigger());
         flyWheel.setValues(gamepad1.a,toggle);
         liftControl.setValues(gamepad1.dpad_up, gamepad1.dpad_down);
-        if(gamepad1.x)
-            servoControl.open();
-        else if(gamepad1.b)
-            servoControl.close();
+        if(gamepad1.dpad_right)
+            servoControl.openLeft();
+            else if(gamepad1.dpad_left)
+            servoControl.closeLeft();
+        if (gamepad1.x) servoControl.openRight();
+            else if(gamepad1.b) servoControl.closeRight();
+
+        if(gamepad1.start){
+            servoControl.pull();
+        } else if (gamepad1.guide){
+            servoControl.release();
+        }
 
         //telemetry.addData("position ", hDrive.encoderValues(M_FRONT_LEFT));
         //sAccel.calcAccel();

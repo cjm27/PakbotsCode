@@ -18,14 +18,14 @@ import static java.lang.Math.*;
 
 public abstract class ComponentsInit extends OpMode {
     private DcMotor mFL, mFR, mRL, mRR, mBL, mUW, mLW, mUL;
-    private Servo sTL, sTR;
+    private Servo sTL, sTR, sW;
     private CRServo sTI, sLI, sRI, sFT,sFB;
     private AnalogInput tbUP;
     private ColorSensor sColor;
     private Accelerometer sAccel;
     private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUW, mLW, mUL};
     private CRServo[] crservos = {sTI, sLI, sRI,sFT,sFB};
-    private Servo[] servos = {sTL, sTR};
+    private Servo[] servos = {sTL, sTR, sW};
 
     public static final class ComponentMap {
         final static int M_FRONT_LEFT = 0;
@@ -39,6 +39,7 @@ public abstract class ComponentsInit extends OpMode {
         //servo
         final static int S_TOP_LEFT = 0;
         final static int S_TOP_RIGHT = 1;
+        final static int S_WINCH = 2;
         //crservo
         final static int S_INTAKE_FRONT = 0;
         final static int S_INTAKE_MID = 1;
@@ -123,6 +124,7 @@ public abstract class ComponentsInit extends OpMode {
         servos[S_TOP_LEFT] = hardwareMap.servo.get("sl");
         servos[S_TOP_RIGHT] = hardwareMap.servo.get("sr");
         servos[S_TOP_RIGHT].setPosition(0.0);
+        servos[S_WINCH] = hardwareMap.servo.get("w");
         //servos[S_TOP_LEFT].setPosition(0.7);
     }
 
