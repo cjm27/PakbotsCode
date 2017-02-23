@@ -7,12 +7,15 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.ComponentsInit.ComponentMap.*;
 
 import com.qualcomm.robotcore.hardware.AnalogInput;
+
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import static java.lang.Math.*;
 
@@ -23,6 +26,7 @@ public abstract class ComponentsInit extends OpMode {
     private AnalogInput tbUP;
     private ColorSensor sColor;
     private Accelerometer sAccel;
+    private DistanceSensor distance;
     private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUW, mLW, mUL};
     private CRServo[] crservos = {sTI, sLI, sRI,sFT,sFB};
     private Servo[] servos = {sTL, sTR, sW};
@@ -84,6 +88,7 @@ public abstract class ComponentsInit extends OpMode {
 
         //tbUP=hardwareMap.analogInput.get("tbUP");
         //sColor=hardwareMap.colorSensor.get("color");
+        distance=hardwareMap.get(DistanceSensor.class,"distance");
         sAccel = new Accelerometer();
         sAccel.imu = hardwareMap.get(BNO055IMU.class, "accel");
     }
@@ -127,7 +132,9 @@ public abstract class ComponentsInit extends OpMode {
         servos[S_WINCH] = hardwareMap.servo.get("w");
         //servos[S_TOP_LEFT].setPosition(0.7);
     }
-
+    double getDistance(DistanceUnit unit){
+        return distance.getDistance(unit);
+    }
     CRServo[] getCRServos() {
         return crservos;
     }

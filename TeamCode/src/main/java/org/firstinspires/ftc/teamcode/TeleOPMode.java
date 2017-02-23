@@ -4,34 +4,35 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.Func;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import static org.firstinspires.ftc.teamcode.ComponentsInit.ComponentMap.M_FRONT_LEFT;
 
 @TeleOp(name = "TeleOPMode")
 public class TeleOPMode extends ComponentsInit {
-    boolean intakeStatus = false;
-    double winchServoPos = 0.0;
+
 
     public void init() {
-        //super.sensorInit();
+        super.sensorInit();
         super.MotorInit();
-        super.crservoInit();
-        super.servoInit();
-        liftControl=new LiftControl(super.getMotors());
+        //super.crservoInit();
+        //super.servoInit();
+        //liftControl=new LiftControl(super.getMotors());
         hDrive = new HolonomicDrive(super.getMotors());
-        flyWheel=new FlyWheel(super.getMotors());
-        intake=new Intake(super.getCRServos());
+        //flyWheel=new FlyWheel(super.getMotors());
+        //intake=new Intake(super.getCRServos());
         //tDrive=new TankDrive(super.getMotors());
-        servoControl=new ServoControl(super.getServos());
-        //`new Thread(getAccel()).start();
-        //getAccel().composeTelemetry(telemetry);
+        //servoControl=new ServoControl(super.getServos());
+        new Thread(getAccel()).start();
+        getAccel().composeTelemetry(telemetry);
         time=System.currentTimeMillis();
-        servoControl.release();
+        //servoControl.release();
     }
 
     public void loop() {
+
         hDrive.setValues(super.driveX(), super.driveLY(), super.driveR());
-        if(gamepad1.y&& (System.currentTimeMillis()-time)>=250) {
+        /*if(gamepad1.y&& (System.currentTimeMillis()-time)>=250) {
             time=System.currentTimeMillis();
             toggle = !toggle;
         }
@@ -42,7 +43,7 @@ public class TeleOPMode extends ComponentsInit {
         if(gamepad1.dpad_right)
             servoControl.openLeft();
             else if(gamepad1.dpad_left)
-            servoControl.closeLeft();
+                servoControl.closeLeft();
         if (gamepad1.x) servoControl.openRight();
             else if(gamepad1.b) servoControl.closeRight();
 
@@ -50,11 +51,10 @@ public class TeleOPMode extends ComponentsInit {
             servoControl.pull();
         } else if (gamepad1.guide){
             servoControl.release();
-        }
+        }*/
 
-        //telemetry.addData("position ", hDrive.encoderValues(M_FRONT_LEFT));
-        //sAccel.calcAccel();
-        //telemetry.addData("position:", sAccel.positions.x+""+sAccel.positions.y+""+sAccel.positions.z+"");
+        telemetry.addData("distance ", getDistance(DistanceUnit.CM));
+
     }
     double time;
     boolean toggle=false;
@@ -62,6 +62,5 @@ public class TeleOPMode extends ComponentsInit {
     FlyWheel flyWheel;
     LiftControl liftControl;
     HolonomicDrive hDrive;
-    TankDrive tDrive;
     ServoControl servoControl;
 }

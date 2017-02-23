@@ -13,10 +13,10 @@ public class HolonomicDrive {
     }
 
     void setValues(float x, float y, float r) {
-        double flValue = y + r + x;
+        double flValue = y + r + x*0.55;
         double rlValue = y + r - x;
         double frValue = y - r - x;
-        double rrValue = -r + x + y;
+        double rrValue = -r + x + y*0.55;
 
         double maxValue = Math.max(
                 Math.max(Math.abs(flValue), Math.abs(rlValue)),
@@ -28,10 +28,10 @@ public class HolonomicDrive {
             frValue /= maxValue;
             rrValue /= maxValue;
         }
-        motors[M_FRONT_LEFT].setPower(flValue*0.85);
+        motors[M_FRONT_LEFT].setPower(flValue);
         motors[M_FRONT_RIGHT].setPower(frValue);
         motors[M_REAR_LEFT].setPower(rlValue);
-        motors[M_REAR_RIGHT].setPower(rrValue*0.85);
+        motors[M_REAR_RIGHT].setPower(rrValue);
 
     }
     int encoderValues(int port){
