@@ -28,8 +28,8 @@ public class Accelerometer implements Runnable{
          calcAccel();
          while(true){
              angles=imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
-             accel=imu.getLinearAcceleration();
-             position=imu.getPosition().toUnit(DistanceUnit.CM);
+             //accel=imu.getLinearAcceleration();
+             //position=imu.getPosition().toUnit(DistanceUnit.CM);
          }
      }
      public void calcAccel() {
@@ -37,26 +37,21 @@ public class Accelerometer implements Runnable{
          parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
          parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
          parameters.calibrationDataFile = "AdafruitIMUCalibration.json";
-         parameters.accelerationIntegrationAlgorithm = new Integrator();
+         //parameters.accelerationIntegrationAlgorithm = new Integrator();
          angles=imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
-         accel=imu.getLinearAcceleration();
-         position=imu.getPosition();
+         //accel=imu.getLinearAcceleration();
+         //position=imu.getPosition();
          imu.initialize(parameters);
-         imu.startAccelerationIntegration(position, new Velocity(), 100);
+         //imu.startAccelerationIntegration(position, new Velocity(), 100);
 
     }
     void composeTelemetry(Telemetry telemetry) {
 
-        // At the beginning of each telemetry update, grab a bunch of data
-        // from the IMU that we will then display in separate lines.
-        telemetry.addAction(new Runnable() { @Override public void run()
+         telemetry.addAction(new Runnable() { @Override public void run()
         {
-            // Acquiring the angles is relatively expensive; we don't want
-            // to do that in each of the three items that need that info, as that's
-            // three times the necessary expense.
             angles   = imu.getAngularOrientation().toAxesReference(AxesReference.INTRINSIC).toAxesOrder(AxesOrder.ZYX);
-            accel=imu.getLinearAcceleration();
-            position=imu.getPosition().toUnit(DistanceUnit.CM);
+            //accel=imu.getLinearAcceleration();
+            //position=imu.getPosition().toUnit(DistanceUnit.CM);
         }
         });
 
@@ -88,7 +83,7 @@ public class Accelerometer implements Runnable{
                         return formatAngle(angles.angleUnit, angles.thirdAngle);
                     }
                 });
-        telemetry.addLine()
+        /*telemetry.addLine()
                 .addData("x accel", new Func<String>() {
                     @Override public String value() {
                         return accel.xAccel+"";
@@ -119,7 +114,7 @@ public class Accelerometer implements Runnable{
                     @Override public String value() {
                         return position.z+"";
                     }
-                });
+                });*/
     }
 
     String formatAngle(AngleUnit angleUnit, double angle) {

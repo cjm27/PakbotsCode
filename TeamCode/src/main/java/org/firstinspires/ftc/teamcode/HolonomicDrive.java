@@ -13,10 +13,10 @@ public class HolonomicDrive {
     }
 
     void setValues(float x, float y, float r) {
-        double flValue = y + r + x*0.55;
+        double flValue = y + r + x;
         double rlValue = y + r - x;
         double frValue = y - r - x;
-        double rrValue = -r + x + y*0.55;
+        double rrValue = -r + x + y;
 
         double maxValue = Math.max(
                 Math.max(Math.abs(flValue), Math.abs(rlValue)),

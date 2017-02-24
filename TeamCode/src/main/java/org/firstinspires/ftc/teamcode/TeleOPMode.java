@@ -6,61 +6,48 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.robotcore.external.Func;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-import static org.firstinspires.ftc.teamcode.ComponentsInit.ComponentMap.M_FRONT_LEFT;
-
+import static org.firstinspires.ftc.teamcode.ComponentsInit.ComponentMap.*;
 @TeleOp(name = "TeleOPMode")
-public class TeleOPMode extends ComponentsInit {
+public class TeleOPMode extends OpMode {
 
+    ComponentsInit comp;
 
     public void init() {
-        super.sensorInit();
-        super.MotorInit();
-        //super.crservoInit();
-        //super.servoInit();
-        //liftControl=new LiftControl(super.getMotors());
-        hDrive = new HolonomicDrive(super.getMotors());
-        //flyWheel=new FlyWheel(super.getMotors());
-        //intake=new Intake(super.getCRServos());
-        //tDrive=new TankDrive(super.getMotors());
-        //servoControl=new ServoControl(super.getServos());
-        new Thread(getAccel()).start();
-        getAccel().composeTelemetry(telemetry);
+        comp = new ComponentsInit(hardwareMap, gamepad1);
+        new Thread(comp.getAccel()).start();
+        comp.getAccel().composeTelemetry(telemetry);
         time=System.currentTimeMillis();
-        //servoControl.release();
+       // comp.getServoControl().release();
     }
 
     public void loop() {
 
-        hDrive.setValues(super.driveX(), super.driveLY(), super.driveR());
-        /*if(gamepad1.y&& (System.currentTimeMillis()-time)>=250) {
+        comp.hDrive.setValues(comp.driveX(), comp.driveLY(), comp.driveR());
+        /*
+        if(gamepad1.y&& (System.currentTimeMillis()-time)>=250) {
             time=System.currentTimeMillis();
             toggle = !toggle;
         }
-        intake.setIntakeValues(gamepad1.left_bumper,leftTrigger());
-        intake.setFeedValues(gamepad1.right_bumper,rightTrigger());
-        flyWheel.setValues(gamepad1.a,toggle);
-        liftControl.setValues(gamepad1.dpad_up, gamepad1.dpad_down);
+        comp.getIntake().setIntakeValues(gamepad1.left_bumper,comp.leftTrigger());
+        comp.getIntake().setFeedValues(gamepad1.right_bumper,comp.rightTrigger());
+        comp.getFlyWheel().setValues(gamepad1.a,toggle);
+        comp.getLiftControl().setValues(gamepad1.dpad_up, gamepad1.dpad_down);
         if(gamepad1.dpad_right)
-            servoControl.openLeft();
-            else if(gamepad1.dpad_left)
-                servoControl.closeLeft();
-        if (gamepad1.x) servoControl.openRight();
-            else if(gamepad1.b) servoControl.closeRight();
+            comp.getServoControl().openLeft();
+        else if(gamepad1.dpad_left)
+                comp.getServoControl().closeLeft();
+        if (gamepad1.x) comp.getServoControl().openRight();
+            else if(gamepad1.b) comp.getServoControl().closeRight();
 
         if(gamepad1.start){
-            servoControl.pull();
+            comp.getServoControl().pull();
         } else if (gamepad1.guide){
-            servoControl.release();
-        }*/
-
-        telemetry.addData("distance ", getDistance(DistanceUnit.CM));
+            comp.getServoControl().release();
+        }
+        */
+        telemetry.addData("rotation ",comp.getEncoderValue(M_FRONT_LEFT));
 
     }
     double time;
     boolean toggle=false;
-    Intake intake;
-    FlyWheel flyWheel;
-    LiftControl liftControl;
-    HolonomicDrive hDrive;
-    ServoControl servoControl;
 }

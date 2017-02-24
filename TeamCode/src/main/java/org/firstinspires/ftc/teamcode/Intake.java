@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 public class Intake {
     public Intake(CRServo...crservos){
         this.crservos=crservos;
+        intakeStop();
     }
 
     public void setIntakeValues(boolean forward, boolean backward){
@@ -29,22 +30,19 @@ public class Intake {
     }
 
     public void intakeForward(){
-        crservos[S_INTAKE_FRONT].setPower(1);
-        crservos[S_INTAKE_MID].setPower(-1.0);
-        crservos[S_INTAKE_REAR].setPower(1);
+        crservos[S_INTAKE_BOTTOM].setPower(1);
+        crservos[S_INTAKE_TOP].setPower(-1.0);
     }
 
     public void intakeReverse(){
-        crservos[S_INTAKE_FRONT].setPower(-1.0);
-        crservos[S_INTAKE_MID].setPower(1);
-        crservos[S_INTAKE_REAR].setPower(-1.0);
+        crservos[S_INTAKE_BOTTOM].setPower(-1.0);
+        crservos[S_INTAKE_TOP].setPower(1);
     }
 
     public void intakeStop(){
 
-        crservos[S_INTAKE_FRONT].setPower(0);
-        crservos[S_INTAKE_MID].setPower(0);
-        crservos[S_INTAKE_REAR].setPower(0);
+        crservos[S_INTAKE_TOP].setPower(0);
+        crservos[S_INTAKE_BOTTOM].setPower(0);
     }
 
     public void feedForward(){

@@ -1,14 +1,15 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.hardware.adafruit.BNO055IMU;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.AccelerationSensor;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
 import static org.firstinspires.ftc.teamcode.ComponentsInit.ComponentMap.*;
@@ -19,17 +20,59 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 import static java.lang.Math.*;
 
-public abstract class ComponentsInit extends OpMode {
+public class ComponentsInit {
     private DcMotor mFL, mFR, mRL, mRR, mBL, mUW, mLW, mUL;
     private Servo sTL, sTR, sW;
-    private CRServo sTI, sLI, sRI, sFT,sFB;
+    private CRServo sIT, sIB, sFT,sFB;
     private AnalogInput tbUP;
     private ColorSensor sColor;
     private Accelerometer sAccel;
-    private DistanceSensor distance;
+    //private DistanceSensor distance;
     private DcMotor[] motors = {mFL, mFR, mRL, mRR, mBL, mUW, mLW, mUL};
-    private CRServo[] crservos = {sTI, sLI, sRI,sFT,sFB};
+    private CRServo[] crservos = {sIT, sIB,sFT,sFB};
     private Servo[] servos = {sTL, sTR, sW};
+    private HardwareMap hardwareMap;
+    private Gamepad gamepad1;
+
+    Intake intake;
+    FlyWheel flyWheel;
+    LiftControl liftControl;
+    HolonomicDrive hDrive;
+    ServoControl servoControl;
+    TankDrive tDrive;
+
+    public ComponentsInit(HardwareMap hardwareMap, Gamepad gamepad1) {
+        this.hardwareMap = hardwareMap;
+        this.gamepad1 = gamepad1;
+
+        sensorInit();
+        MotorInit();
+        crservoInit();
+        servoInit();
+
+        //liftControl=new LiftControl(motors);
+        hDrive = new HolonomicDrive(motors);
+        flyWheel=new FlyWheel(motors);
+        intake=new Intake(crservos);
+        tDrive=new TankDrive(motors);
+        //servoControl=new ServoControl(servos);
+
+    }
+
+    public Intake getIntake() {
+        return intake;
+    }
+
+    public FlyWheel getFlyWheel() {
+        return flyWheel;
+    }
+
+    public LiftControl getLiftControl() {
+        return liftControl;
+    }
+    public ServoControl getServoControl() {
+        return servoControl;
+    }
 
     public static final class ComponentMap {
         final static int M_FRONT_LEFT = 0;
@@ -45,11 +88,10 @@ public abstract class ComponentsInit extends OpMode {
         final static int S_TOP_RIGHT = 1;
         final static int S_WINCH = 2;
         //crservo
-        final static int S_INTAKE_FRONT = 0;
-        final static int S_INTAKE_MID = 1;
-        final static int S_INTAKE_REAR = 2;
-        final static int S_FEED_TOP = 3;
-        final static int S_FEED_BOTTOM = 4;
+        final static int S_INTAKE_TOP = 0;
+        final static int S_INTAKE_BOTTOM = 1;
+        final static int S_FEED_TOP = 2;
+        final static int S_FEED_BOTTOM = 3;
     }
 
     float driveX() {
@@ -88,18 +130,14 @@ public abstract class ComponentsInit extends OpMode {
 
         //tbUP=hardwareMap.analogInput.get("tbUP");
         //sColor=hardwareMap.colorSensor.get("color");
-        distance=hardwareMap.get(DistanceSensor.class,"distance");
+        //distance=hardwareMap.get(DistanceSensor.class,"distance");
         sAccel = new Accelerometer();
         sAccel.imu = hardwareMap.get(BNO055IMU.class, "accel");
     }
 
     void crservoInit() {
-        //crservos[S_TOP_INTAKE]=hardwareMap.crservo.get("ti");
-        //crservos[S_RIGHT_INTAKE]=hardwareMap.crservo.get("ri");
-        //crservos[S_LEFT_INTAKE]=hardwareMap.crservo.get("li");
-        crservos[S_INTAKE_FRONT] = hardwareMap.crservo.get("fi");
-        crservos[S_INTAKE_MID] = hardwareMap.crservo.get("mi");
-        crservos[S_INTAKE_REAR] = hardwareMap.crservo.get("ri");
+        crservos[S_INTAKE_TOP] = hardwareMap.crservo.get("it");
+        crservos[S_INTAKE_BOTTOM] = hardwareMap.crservo.get("ib");
 
         crservos[S_FEED_TOP] = hardwareMap.crservo.get("tf");
         crservos[S_FEED_BOTTOM] = hardwareMap.crservo.get("bf");
@@ -130,23 +168,14 @@ public abstract class ComponentsInit extends OpMode {
         servos[S_TOP_RIGHT] = hardwareMap.servo.get("sr");
         servos[S_TOP_RIGHT].setPosition(0.0);
         servos[S_WINCH] = hardwareMap.servo.get("w");
-        //servos[S_TOP_LEFT].setPosition(0.7);
-    }
-    double getDistance(DistanceUnit unit){
-        return distance.getDistance(unit);
-    }
-    CRServo[] getCRServos() {
-        return crservos;
-    }
 
-    Servo[] getServos() {
-        return servos;
     }
-
-    DcMotor[] getMotors() {
-        return motors;
+    int getEncoderValue(int motor){
+        return motors[motor].getCurrentPosition();
     }
     Accelerometer getAccel(){
         return sAccel;
     }
+
+
 }
